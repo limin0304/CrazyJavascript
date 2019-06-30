@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+	null //
+	null == undefined // true undefined派生自null
+	typeof null // "object"
+	// Number 有以下属性
+	console.log(Number.MAX_VALUE); // 最大值
+	console.log(Number.MIN_VALUE); // 最小值
+	console.log(Number.NEGATIVE_INFINITY); // 负无穷
+	console.log(Number.POSITIVE_INFINITY); // 正无穷
+	isFinite(); // 是否位于最大数和最小数之间
+
+	Number(null) // 0
+	Number(011) // 11 而不是9
+	Number("") // 0
+	NaN // not a number
+	isNaN(); // 转换为数值，如果能则true
+
+	parseInt("1234blue") // 1234
+	parseInt(011) // 9 
+	parseInt('011') // 11  ecmaScript5引擎 
+	parseInt('011', 8) // 9
+	</script>
+	<script type="text/javascript">
+	let obj = {a: 1, b: 2};
+	for(let i in obj) {
+		console.log(i, obj[i]);
+	}
+	Object.keys(obj);
+	let axios = { 
+		get: function(x) { 
+			return new Promise(resolve => { 
+				setTimeout(() => { resolve({data: x}) }, 2000) }) 
+			}
+		} 
+	let query = 'mangos' 
+	async function fetchData(query) { 
+		try { 
+			const response = await axios.get(`/q?query=${query}`) 
+			const data = response.data 
+			return data
+		} catch (error) { 
+			console.error(error) 
+		} 
+	} 
+	fetchData(query).then(data => { 
+		console.log(data)
+	});
+
+
+	let n = 5;
+	for (let i = 0; i < n; i++) {
+		for (let j = n-1; j > i; j--) {
+			document.write("&nbsp;");
+		}
+		document.write("*");
+		if (i > 0) {
+			for (let k = 0; k < 2*i-1; k++) {
+				document.write("&nbsp;");
+			}
+			document.write("*");
+		}
+		document.write("<br>");
+	}
+	for (let i = 0; i < n-1; i++) {
+		for (let j = 0; j < i+1; j++) {
+			document.write("&nbsp;");
+		}
+		document.write("*");
+		if (i < n-2) {
+			for (let j = n-1; j > 2*i-1; j--) {
+				document.write("&nbsp;");
+			}
+			document.write("*");
+			document.write("<br>");
+		}
+	}
+	
+	</script>
+</body>
+</html>

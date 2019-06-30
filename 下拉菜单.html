@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		a {
+			color: #7e7eec;
+		}
+		.menu {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.menu>li {
+			position: relative;
+			float: left;
+			padding: 0 10px;
+		}
+		.menu>li>a {
+			display: block;
+			padding: 0 10px;
+			line-height: 45px;
+			text-decoration: none;
+		}
+		.menu li:hover .drop-menu {
+			display: block;
+		}
+		.drop-menu {
+			display: none;
+			position: absolute;
+			list-style: none;
+			margin: 0;
+			padding: 8px 0;
+			border: 1px solid rgba(0,0,0,.15);
+			box-shadow: 0 6px 12px rgba(0,0,0,.175);
+			border-radius: 4px;
+		}
+		.drop-menu:before {
+			content: "";
+			position: absolute;
+			top: -20px;
+			left: 14px;
+			border: 10px solid transparent;
+			border-bottom-color: #ddd;
+		}
+		.drop-menu:after {
+			content: "";
+			position: absolute;
+			top: -16px;
+    		left: 16px;
+			border: 8px solid transparent;
+			border-bottom-color: #fff;
+		}
+		.drop-menu li a {
+			display: block;
+			min-width: 100px;
+			line-height: 30px;
+			text-decoration: none;
+			padding: 0 15px;
+		}
+		.drop-menu li a:hover {
+			background-color: #ededed;
+		}
+	</style>
+</head>
+<body>
+   <ul class="menu">
+   		<li>
+   			<a href="#">前端</a>
+   			<ul class="drop-menu">
+   				<li><a href="#">Html</a></li>
+   				<li><a href="#">Css</a></li>
+   				<li><a href="">Javascript</a></li>
+   			</ul>
+   		</li>
+   		<li>
+   			<a href="#">后端</a>
+   			<ul class="drop-menu">
+   				<li><a href="#">Java</a></li>
+   				<li><a href="#">PHP</a></li>
+   				<li><a href="#">C</a></li>
+   			</ul>
+   		</li>
+   		<li><a href="#">数据库</a></li>
+   </ul>
+</body>
+</html>
