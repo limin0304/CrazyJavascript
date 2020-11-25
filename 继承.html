@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-ch">
+	<head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+	<body>
+        <script type="text/javascript">
+            function People(name) {
+                this.name = name;
+                this.sleep = function() {
+                    console.log(this.name + ' sleep');
+                }
+            }
+            People.prototype.eat = function() {
+                console.log(this.name + ' eat');
+            }
+
+            // 1.原型继承 优点：可以继承父类的原型方法，父类方法属性改变，子类也会继承  缺点：不支持多继承
+            function Woman() {};
+            Woman.prototype = new People();
+            const obj = new Woman();
+            obj.name = '小明';
+            People.prototype.play = function() {
+                console.log(this.name + ' play');
+            }
+            Woman.prototype.play = function() {
+                console.log(this.name + ' play1');
+            }
+            obj.play();
+
+            // 2.构造函数继承 优点：可以通过call多个父类，实现多继承 缺点：不能继承父类原型方法
+            function Woman2() {
+                People.call(this, '小明2');
+            };
+            const obj2 = new Woman2();
+            obj2.sleep();
+            obj2.eat(); // 报错
+		</script>
+	</body>
+</html>

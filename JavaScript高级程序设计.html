@@ -80,6 +80,74 @@
 			document.write("<br>");
 		}
 	}
+
+	function shuffle(arr) {
+		let len = arr.length;
+		while(len < arr.length) {
+			const round = Math.floor(random() * len--);
+			const last = arr[len];
+			arr[len] = arr[round];
+			arr[round] = last;
+		}
+		return arr;
+	}
+
+	function unique(arr) {
+		return arr.reduce((total, cur) => {
+			if (!total.includes(cur)) {
+				total.push(cur);
+			}
+			return total;
+		}, []);
+	}
+
+	// 防抖动函数
+	function debounce(fn, wait) {
+		let timer = null;
+
+		return function() {
+			const args = arguments;
+			const that = this;
+
+			// 如果timer不为空，那么就清空这次计时器
+			// 然后重新计时
+			if (timer) {
+				clearTimeout(timer);
+				timer = null;
+			}
+
+			timer = setTimeout(() => {
+				fn.apply(that, args);
+				timer = null;
+			}, wait);
+		}
+	}
+
+	// 节流函数
+	function throttle(fn, wait) {
+		let timer = null;
+
+		return function() {
+			const args = arguments;
+			const that = this;
+
+			// 如果timer为空，那么就开始本次计时
+			// timer不为空就不跳过执行
+			if (!timer) {
+				timer = setTimeout(() => {
+					fn.apply(that, args);
+					timer = null;
+				}, wait);
+			}
+		}
+	}
+
+	var aa = throttle(function(a) {
+		console.log(a);
+	}, 2000);
+	setInterval(() => {
+		aa(111);
+	}, 1200);
 	
 	</script>
 </body>
