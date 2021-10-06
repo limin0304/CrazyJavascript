@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-ch">
+	<head>
+        <meta charset="utf-8">
+        <title>发布订阅模式</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/**
+			 * 发布订阅模式
+			 * handles: 事件处理函数集合
+			 * on: 订阅事件
+			 * emit: 发布事件
+			 * off: 删除事件
+            **/
+            class PubSub {
+                constructor() {
+                    this.haddles = {};
+                }
+
+                on(type, callback) {
+                    if (typeof callback !== 'function') {
+                        throw new Error('缺少回调函数');
+                        return;
+                    }
+                    (this.haddles[type] || (this.haddles[type] = [])).push(callback);
+                }
+
+                off(type, callback) {
+                    if(!this.haddles.hasOwnProperty(type)) {
+                        this.haddles[type].forEach((cb, i) => {
+                            if(callback === cb) {
+                                this.haddles.splice(index, 1);
+                            }
+                        });
+                    }
+                }
+
+                emit(type, ...arg) {
+                    if (this.haddles.hasOwnProperty(type)) {
+                        this.haddles[type].forEach(cb => {
+                            cb.apply(null, arg);
+                        })
+                    } else {
+                        throw new Error('事件未注册');
+                    }
+                }
+            }
+
+            const pub = new PubSub();
+            pub.on('click', () => {
+                console.log(111);
+            })
+            pub.on('click', () => {
+                console.log(222);
+            })
+            pub.emit('click');
+		</script>
+	</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-ch">
+	<head>
+        <meta charset="utf-8">
+        <title>观察者模式双向绑定</title>
+    </head>
+    <style> .parent {
+        display: table;
+        width: 300px;
+        height: 300px;
+        text-align: center;
+        border-collapse: collapse;
+    }
+    .row {
+        display: table-row;
+    }
+    .son  {
+        display: table-cell;
+        height: 200px;
+        background-color: yellow;
+        vertical-align: middle;
+    }</style>
+	<body>
+        
+
+    <div class="parent">
+        <div class="row">
+            <div class="son">会议认为，党的十八大以来，我国经济发展取得历史性成就、
+            </div>
+            <div class="son">会议认为，党的十八大以来，我国经济发展取得历史性成就、
+            </div>
+        </div>
+        <div class="row">
+            <div class="son">会议认为，党的十八大以来，我国经济发展取得历史性成就、
+            </div>
+            <div class="son">会议认为，党的十八大以来，我国经济发展取得历史性成就、
+            </div>
+        </div>
+    </div>
+
+
+        <input id='input' onchange="haddleChange()" />
+        <script type="text/javascript">
+            var obj = {};
+            window.obj = obj;
+            function haddleChange() {
+                obj.name = document.getElementById('input').value;
+            }
+
+            function observer(val) {
+                console.log('更新了：', val);
+                document.getElementById('input').value = val;
+            }
+
+            // 1. 
+            Object.defineProperty(obj, 'name', {
+                get() {
+                    return obj[name];
+                },
+                set(val) {
+                    obj[name] = val;
+                    observer(val);
+                }
+            });
+
+            obj.name = '小明1';
+            
+            // 2. 
+            class Person {
+                constructor() {
+                    this.age = 22;
+                }
+                set name(val) {
+                    observer(val);
+                }
+                get name() {
+                    return this.name;
+                }
+            }
+            const obj2 = new Person();
+            obj2.name = '小明2';
+
+            // 3. 
+            const obj3 = new Proxy({}, {
+                set(target, key, val, reciever) {
+                    if (key === 'name') {
+                        observer(val);
+                    }
+                }
+            });
+            obj3.name = '小明3';
+		</script>
+	</body>
+</html>
