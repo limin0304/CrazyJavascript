@@ -1,86 +1,84 @@
 <!DOCTYPE html>
 
 <html>
-  <style>
-    table {
-      width: 100%;
-      border: 1px solid #ddd;
-    }
-    th,
-    td {
-      position: relative;
-      border: 1px solid #ddd;
-    }
-    .movableLine {
-      position: absolute;
-      width: 4px;
-      right: 0;
-      top: 0;
-      height: 100%;
-      cursor: col-resize;
-      z-index: 1;
-      user-select: none;
-    }
-
-    .movableLine:hover {
-      background-color: #aaa;
-    }
-  </style>
-  <body>
-    <table id="timeTable">
-      <thead>
-        <tr>
-          <th>tt</th>
-          <th>tt</th>
-          <th>tt</th>
-          <th>tt</th>
-          <th>tt</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr id="timeSpan">
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
-  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script>
-    $(function() {
-      $("table thead th").append(`<div class="movableLine"></div>`);
-      const movableLine = $(".movableLine");
-
-      movableLine.mousedown(function(e) {
-        const _this = this;
-        let clientXBefore = e.clientX;
-        $("body").on("mousemove", mouseMove);
-        movableLine.mouseup(onMouseUp);
-
-        function mouseMove(e) {
-          let clientX = e.clientX;
-          $(_this).css("right", clientXBefore - clientX);
-          console.log("r", clientXBefore - clientX);
+    <style>
+        table {
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+        th,
+        td {
+            position: relative;
+            border: 1px solid #ddd;
+        }
+        .movableLine {
+            position: absolute;
+            width: 4px;
+            right: 0;
+            top: 0;
+            height: 100%;
+            cursor: col-resize;
+            z-index: 1;
+            user-select: none;
         }
 
-        function onMouseUp(e) {
-          $("body").unbind("mousemove", mouseMove);
-          movableLine.unbind("mouseup", onMouseUp);
-          const width = $(this)
-            .parent("th")
-            .width();
-          let clientX = e.clientX;
-          const offsetX = clientXBefore - clientX;
-          console.log("w", width - offsetX);
-          $(this)
-            .parent("th")
-            .width(width - offsetX);
-          $(this).css("right", 0);
+        .movableLine:hover {
+            background-color: #aaa;
         }
-      });
-    });
-  </script>
+    </style>
+    <body>
+        <table id="timeTable">
+            <thead>
+                <tr>
+                    <th>tt</th>
+                    <th>tt</th>
+                    <th>tt</th>
+                    <th>tt</th>
+                    <th>tt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="timeSpan">
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        $(function () {
+            $("table thead th").append(`<div class="movableLine"></div>`);
+            const movableLine = $(".movableLine");
+
+            movableLine.mousedown(function (e) {
+                const _this = this;
+                let clientXBefore = e.clientX;
+                $("body").on("mousemove", mouseMove);
+                movableLine.mouseup(onMouseUp);
+
+                function mouseMove(e) {
+                    let clientX = e.clientX;
+                    $(_this).css("right", clientXBefore - clientX);
+                    console.log("r", clientXBefore - clientX);
+                }
+
+                function onMouseUp(e) {
+                    $("body").unbind("mousemove", mouseMove);
+                    movableLine.unbind("mouseup", onMouseUp);
+                    const width = $(this).parent("th").width();
+                    let clientX = e.clientX;
+                    const offsetX = clientXBefore - clientX;
+                    console.log("w", width - offsetX);
+                    $(this)
+                        .parent("th")
+                        .width(width - offsetX);
+                    $(this).css("right", 0);
+                }
+            });
+        });
+    </script>
 </html>

@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>10 classical algorithm</title>
-  </head>
-  <body>
-    <script type="text/javascript">
-      // 冒泡
-      let bubbleSort = arr => {
-        let len = arr.length;
-        for (let i = 0; i < len; i++) {
-          for (let j = 0; j < len - 1 - i; j++) {
-            if (arr[j] > arr[j + 1]) {
-              let temp = arr[j];
-              arr[j] = arr[j + 1];
-              arr[j + 1] = temp;
-            }
-          }
-        }
-        console.log(arr);
-      };
+    <head>
+        <title>10 classical algorithm</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            // 冒泡
+            let bubbleSort = arr => {
+                let len = arr.length;
+                for (let i = 0; i < len; i++) {
+                    for (let j = 0; j < len - 1 - i; j++) {
+                        if (arr[j] > arr[j + 1]) {
+                            let temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+                console.log(arr);
+            };
 
-      // 选择
-      let selectionSort = arr => {
-        let len = arr.length;
-        for (let i = 0; i < len; i++) {
-          let index = i;
-          for (let j = i + 1; j < len; j++) {
-            if (arr[index] > arr[j]) {
-              index = j; // 此次循环中最小的数的下表
-            }
-          }
-          let temp = arr[index];
-          arr[index] = arr[i];
-          arr[i] = temp;
-        }
-        console.log(arr);
-      };
+            // 选择
+            let selectionSort = arr => {
+                let len = arr.length;
+                for (let i = 0; i < len; i++) {
+                    let index = i;
+                    for (let j = i + 1; j < len; j++) {
+                        if (arr[index] > arr[j]) {
+                            index = j; // 此次循环中最小的数的下表
+                        }
+                    }
+                    let temp = arr[index];
+                    arr[index] = arr[i];
+                    arr[i] = temp;
+                }
+                console.log(arr);
+            };
 
-      // 插入
-      let insertionSort = arr => {
-        let len = arr.length;
-        for (let i = 0; i < len; i++) {
-          for (let j = i; j > 0; j--) {
-            if (arr[i] < arr[j + 1] && arr[i] > arr[j]) {
-              arr[j + 1] = arr[i];
-            }
-          }
-        }
-        console.log(arr);
-      };
+            // 插入
+            let insertionSort = arr => {
+                let len = arr.length;
+                for (let i = 0; i < len; i++) {
+                    for (let j = i; j > 0; j--) {
+                        if (arr[i] < arr[j + 1] && arr[i] > arr[j]) {
+                            arr[j + 1] = arr[i];
+                        }
+                    }
+                }
+                console.log(arr);
+            };
 
-      bubbleSort([5, 4, 3, 2, 1]);
-      selectionSort([5, 3, 4, 2, 1]);
-      insertionSort([5, 4, 3, 2, 1]);
-    </script>
-  </body>
+            bubbleSort([5, 4, 3, 2, 1]);
+            selectionSort([5, 3, 4, 2, 1]);
+            insertionSort([5, 4, 3, 2, 1]);
+        </script>
+    </body>
 </html>

@@ -1,25 +1,58 @@
 // 版式
 
-$font-family:Microsoft Yahei;
-*, *:before, *:after {
-  box-sizing: border-box;
+$font-family: Microsoft Yahei;
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
 }
 html {
-  text-size-adjust: 100%;
-  min-width: 1140px;
-  font-size:14px;
+    text-size-adjust: 100%;
+    min-width: 1140px;
+    font-size: 14px;
 }
 body {
-  font-family: $font-family;
-  background-color: #fff;
-  color: $silver;
+    font-family: $font-family;
+    background-color: #fff;
+    color: $silver;
 }
-body, div, ul, ol, li, span, p, a, h1, h2, h3, h4, h5, h6, dl, dt, dd, i, b, strong, em, img, table, tr, th, td, input, form, fieldset, textarea, select, option {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  border: none;
-  font-weight: 400;
+body,
+div,
+ul,
+ol,
+li,
+span,
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl,
+dt,
+dd,
+i,
+b,
+strong,
+em,
+img,
+table,
+tr,
+th,
+td,
+input,
+form,
+fieldset,
+textarea,
+select,
+option {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    border: none;
+    font-weight: 400;
 }
 article,
 aside,
@@ -34,24 +67,28 @@ menu,
 nav,
 section,
 summary {
-  display: block;
+    display: block;
 }
-button, input, select, textarea {
-  font-family: $font-family;
-  outline: none;
+button,
+input,
+select,
+textarea {
+    font-family: $font-family;
+    outline: none;
 }
 img {
-  box-sizing: content-box;
-  border: 0;
-  vertical-align: middle;
+    box-sizing: content-box;
+    border: 0;
+    vertical-align: middle;
 }
 a {
-  background-color: transparent;
-  outline: none;
+    background-color: transparent;
+    outline: none;
 }
-ul, ol {
-  list-style: none;
+ul,
+ol {
+    list-style: none;
 }
 [role="button"] {
-  cursor: pointer;
+    cursor: pointer;
 }
