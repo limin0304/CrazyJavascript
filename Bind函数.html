@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bind函数</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        Function.prototype.newCall = function (obj) {
+            const args = Array.prototype.slice.call(arguments, 1);
+            obj.fn = this;
+            obj.fn(...args);
+            delete obj.fn;
+        }
+
+        Function.prototype.newApply = function (obj, arr) {
+            obj.fn = this;
+            obj.fn(...arr);
+            delete obj.fn;
+        }
+
+        Function.prototype.newBind = function(obj) {
+            const args = Array.prototype.slice.call(arguments, 1);
+            const fn = this;
+            const returnFunc = function() { 
+                const argsInner = Array.prototype.slice.call(arguments);
+                const arr = [...args, ...argsInner];
+                if (this instanceof fn) {
+                    console.log(111);
+                    fn.newCall(this, ...arr);
+                } else {
+                    fn.newCall(obj, ...arr);
+                }
+            }
+            returnFunc.prototype = Object.create(fn.prototype);
+            return returnFunc;
+        }
+
+        Function.prototype.bind2 = function (oThis) {
+            if (typeof this !== 'function') {
+                return
+            }
+            
+            let self = this
+            let args = Array.prototype.slice.call(arguments, 1)
+            let fBound = function() {
+                let _this = this instanceof self ? this : oThis //检测是否使用new创建
+                return self.apply(_this, args.concat(Array.prototype.slice.call(arguments)))
+            }
+            
+            if (this.prototype) {
+                fBound.prototype = this.prototype
+            }
+            return fBound
+        }
+
+        function A (age, desc) {
+            console.log(this.name, age, desc);
+        }
+
+        function B (name, age, desc) {
+            this.name = name;
+            console.log(this.name, age, desc);
+        }
+
+        A.newCall({ name: '小明' }, 18, '牛逼');
+        A.newApply({ name: '小明' }, [18, '牛逼']);
+        A.newBind({ name: '小明' })(18, '牛逼');
+        A.newBind({ name: '小明' }, 18)('牛逼');
+        A.newBind({ name: '小明' }, 18, '牛逼')();
+        
+        const newNewBind = B.newBind({ name: '小明' });
+        const obj = new newNewBind('小明', 18, '牛逼');
+    </script>
+</body>
+
+</html>

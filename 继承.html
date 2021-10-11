@@ -16,7 +16,7 @@
                 console.log(this.name + ' eat');
             }
 
-            // 1.原型继承 优点：可以继承父类的原型方法，父类方法属性改变，子类也会继承  缺点：不支持多继承
+            // 1.原型继承 优点：可以继承父类的原型方法，父类方法属性改变，子类也会继承  缺点：不支持多继承, 且会共享引用
             function Woman() {};
             Woman.prototype = new People();
             const obj = new Woman();
@@ -29,13 +29,69 @@
             }
             obj.play();
 
-            // 2.构造函数继承 优点：可以通过call多个父类，实现多继承 缺点：不能继承父类原型方法
+            // 2.构造函数继承 优点：可以通过call多个父类，实现多继承, 且不会共享引用 缺点：不能继承父类原型方法
             function Woman2() {
                 People.call(this, '小明2');
             };
             const obj2 = new Woman2();
             obj2.sleep();
-            obj2.eat(); // 报错
+            // obj2.eat(); // 报错
+            
+            // 3. 组合继承 优点：既可以继承父类原型方法，也可以多继承，也不会共享引用 缺点：会调用两次构造函数
+            function Woman3() {
+                People.call(this, '小明3');
+            };
+            Woman3.prototype = new People();
+            const obj3 = new Woman3();
+            obj3.sleep();
+            obj3.eat();
+
+            // 4. 寄生组合继承 最优解
+            function Woman4() {
+                People.call(this, '小明4');
+            };
+            
+            Woman4.prototype = Object.create(People.prototype);
+            const obj4 = new Woman4();
+            obj4.sleep();
+            obj4.eat();
+
+            // 5. 原型式继承 没啥用
+            function Woman5() {
+                
+            };
+            Woman5.prototype = objectCreate(People.prototype);
+            // Woman5.prototype = Object.create(People.prototype);
+            const obj5 = new Woman5();
+            obj5.name = '小明5';
+            obj5.eat();
+            // obj5.eat();
+            
+             // 6. 寄生继承 在原型式继承基础上封装了一下，可以添加方法
+            function createObject(obj) {
+                const newOBj =  objectCreate(obj);
+                // const newOBj = Object.create(obj);
+                obj.say = function() {
+                    console.log('say 寄生继承');
+                }
+                return newOBj;
+            };
+            function Woman6() {
+                
+            };
+            Woman6.prototype = createObject(People.prototype);
+            const obj6 = new Woman5();
+            obj6.name = '小明6';
+            obj6.eat();
+            obj6.say();
+
+            // 模拟实现 Object.create
+            function objectCreate(obj) {
+                function func() {};
+                func.prototype = obj;
+                return new func();
+            };
+
 		</script>
 	</body>
 </html>
