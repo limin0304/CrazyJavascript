@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Promise</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    const PEDDING = 'pedding';
+    const FULLFAILED = 'fullfailed';
+    const RECECTED = 'rejected';
+        class MyPromise {
+            constructor(excutor) {
+                this.state = 'pedding';
+                this.value = '';
+                this.result = '';
+                this.fullfailedCallbacks = [];
+                this.rejectedCallbacks = [];
+                this.callbacks = [];
+
+                const resolveFn = (value) => {
+                    if (this.state === PEDDING) {
+                        this.state = FULLFAILED;
+                        this.value = value;
+                        
+                        this.fullfailedCallbacks.forEach(callback => callback());
+                    }
+                }
+
+                const rejectFn = (result) => {
+                    if (this.state === PEDDING) {
+                        this.state = RECECTED;
+                        this.result = result;
+
+                        this.rejectedCallbacks.forEach(callback => callback());
+                    }
+                }
+                
+                try {
+                    excutor(resolveFn, rejectFn);
+                } catch (err) {
+                    rejectFn(err);
+                }
+            };
+
+            then(fullfailedFunc, rejectFunc) {
+                const p2 = new MyPromise((resolve, reject) => {
+                    if (this.state === PEDDING) {
+                        this.fullfailedCallbacks.push(() => fullfailedFunc(this.value));
+                        this.rejectedCallbacks.push(() => fullfailedFunc(this.result));
+                    } else if (this.state === FULLFAILED) {
+                        const x = fullfailedFunc(this.value);
+                        resolve(x);
+                    } else if (this.state === RECECTED) {
+                        rejectFunc(this.result);
+                        const x = rejectFunc(this.result);
+                        reject(x);
+                    }
+                });
+                return p2;
+            }
+            
+        }
+
+        const p = new MyPromise((resolve) => {
+            setTimeout(() => {
+                resolve(100);
+            }, 100);
+        }).then((res) => {
+            return 1000;
+        }).then((res) => {
+            console.log(res);
+        });
+
+        const p2 = new MyPromise((resolve) => {
+            setTimeout(() => {
+                resolve(200);
+            }, 200);
+        }).then((res) => {
+            console.log(res);
+        });
+    </script>
+</body>
+
+</html>
