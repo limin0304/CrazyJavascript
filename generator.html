@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <title>await/async generator原理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <script>
+        function* Generator() {
+            const a = yield 1;
+            console.log(a)
+            yield 2;
+            return 'end';
+        }
+        const gen = Generator();
+        console.log(gen.next());
+        console.log(gen.next('a'));
+        console.log(gen.next());
+        console.log(gen.next());
+
+        // for(const i of gen) {
+        //     console.log(i)
+        // }
+
+        class Context {
+            prev = 0;
+            next = 0;
+            done = false;
+        }
+
+        function getValue(context, value) {
+            let a;
+            while (true) {
+                context.prev = context.next;
+                switch (context.next) {
+                    case 0:
+                        context.next = 2;
+                        context.done = false;
+                        return 1;
+                    case 2:
+                        a = value;
+                        console.log(a);
+                        context.next = 4;
+                        context.done = false;
+                        return 2;
+                    case 4:
+                        context.done = true;
+                        context.next = 'end';
+                        return 'end';
+                    case 'end':
+                        context.done = true;
+                        return;
+                }
+            }
+        }
+
+        function Gen() {
+            const context = new Context();
+            return {
+                next: function (value) {
+                    return {
+                        value: getValue(context, value),
+                        done: context.done
+                    }
+                }
+            }
+
+        }
+
+        const gen1 = Gen();
+        console.log(gen1.next());
+        console.log(gen1.next('a'));
+        console.log(gen1.next());
+        console.log(gen1.next());
+
+
+
+
+        function asyncFunc() {
+            awaitfunc(1);
+            awaitfunc(2);
+            awaitfunc('end');
+        }
+
+        function next(value, done) {
+            return {
+                value,
+                done
+            }
+        };
+
+        function awaitfunc(value) {
+            next(value);
+        }
+
+        function foo() {
+            const gen2 = Generator();
+            return new Promise((resolve, reject) => {
+                function next() {
+                    const obj = gen2.next();
+                    console.log(obj);
+                    const { value, done } = obj; 
+                    if (!done) {
+                        Promise.resolve(value).then(val => next(val))
+                    }
+                    return value;
+                }
+                const value = next();
+                resolve(Promise.resolve(value));
+            })
+
+        }
+        foo().then(res => {
+            console.log(res)
+        });
+    </script>
+</body>
+
+</html>
