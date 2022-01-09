@@ -15,6 +15,8 @@ const codeMessage = {
     503: "服务不可用，服务器暂时过载或维护。",
     504: "网关超时。",
 };
+
+console.log(codeMessage[200]);
 const Regep = {
     num: /^\d+$/,
     numx: /\d+/,
